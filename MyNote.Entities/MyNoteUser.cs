@@ -35,7 +35,6 @@ namespace MyNote.Entities
 
         
 
-
         public virtual List<Note> Notes { get; set; }
 
         public virtual List<Comment> Comments { get; set; }
