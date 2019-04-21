@@ -1,0 +1,26 @@
+﻿using MyNote.Entities.Messages;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyNote.BusinessLayer
+{
+    public class BusinessLayerResult<T> where T : class
+    {
+        public List<ErrorMessageObg> Errors { get; set; }
+
+        public T Result { get; set; }
+
+        public BusinessLayerResult()
+        {
+            Errors = new List<ErrorMessageObg>();
+        }
+
+        public void AddError(ErrorMessagesCode code, string message)
+        {
+            Errors.Add(new ErrorMessageObg() { Code = code, Message = message});
+        }
+    }
+}
