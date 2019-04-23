@@ -39,14 +39,11 @@
     width: 100%;
     padding: 20px 0px;
     border-top-right-radius: 10px;
-    border-top-left-radius: 10px
+    border-top-left-radius: 10px;
 }
 
 .remember {
     color: black;
 }
 
-.validation-summary-errors {
-    border: 2px dotted;
-    color: red;
-}
+

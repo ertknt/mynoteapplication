@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyNote.Entities.Messages
 {
-    public class ErrorMessageObg
+    public class ErrorMessageObj
     {
         public ErrorMessagesCode Code { get; set; }
         public string Message { get; set; }

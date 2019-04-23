@@ -11,20 +11,28 @@ namespace MyNote.Entities
     [Table("EvernoteUsers")]
     public class MyNoteUser : MyEntityBase
     {
-        [StringLength(25)]
+        [Display(Name ="İsim")]
+        [StringLength(25, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string Name { get; set; }
 
-        [StringLength(25)]
+        [Display(Name = "Soyad")]
+        [StringLength(25, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string Surname { get; set; }
 
-        [Required, StringLength(25)]
+        [Display(Name = "Kullanıcı Adı")]
+        [Required(ErrorMessage = "{0} alanı gereklidir."), StringLength(25)]
         public string Username { get; set; }
 
-        [Required, StringLength(70)]
+        [Display(Name = "E-posta")]
+        [Required(ErrorMessage = "{0} alanı gereklidir."), StringLength(70)]
         public string Email { get; set; }
 
-        [Required, StringLength(25)]
+        [Display(Name = "Şifre")]
+        [Required(ErrorMessage = "{0} alanı gereklidir."), StringLength(25)]
         public string Password { get; set; }
+
+        [StringLength(30, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
+        public string ProfileImageFilename { get; set; }
 
         public bool IsActive { get; set; }
 

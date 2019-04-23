@@ -19,7 +19,7 @@ namespace MyNote.WebApp.Init
 
             }
 
-            return null;
+            return "system";
         }
     }
 }
