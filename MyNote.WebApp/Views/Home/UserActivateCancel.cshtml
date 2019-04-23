@@ -1,0 +1,39 @@
+﻿@using MyNote.Entities.Messages
+@model List<ErrorMessageObg>
+@{
+    ViewBag.Title = "Hesap Geçersiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section class="login-info">
+    <div class="container">
+        <div class="row main">
+            <div class="form-header">
+                <h1 class="text-center ">Yönlendiriliyorsunuz...</h1>
+            </div>
+            <hr />
+            <div class="text-danger">
+                <h2><span class="glyphicon glyphicon-floppy-remove"> Hesap geçerli değil.</span></h2>
+                <hr />
+                <p class="text-justify">
+                    @foreach (var err in Model)
+                    {
+                        @err.Message <br>
+                    }
+                </p>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(function () {
+        $("footer").parent().hide();
+
+        setTimeout(function () {
+            window.location = "/Home/Index";
+        }, 3000);
+    });
+</script>
+
