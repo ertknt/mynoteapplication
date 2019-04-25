@@ -158,6 +158,13 @@
     <Content Include="Views\Shared\Info.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_PartialFooter.cshtml" />
+    <Content Include="Views\Home\UserActivateCancel.cshtml" />
+    <Content Include="Views\Home\UserActivateOk.cshtml" />
+    <Content Include="Views\Category\Create.cshtml" />
+    <Content Include="Views\Category\Delete.cshtml" />
+    <Content Include="Views\Category\Details.cshtml" />
+    <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -168,7 +175,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyNote.BusinessLayer\MyNote.BusinessLayer.csproj">
@@ -178,6 +184,10 @@
     <ProjectReference Include="..\MyNote.Common\MyNote.Common.csproj">
       <Project>{f244fa12-cba8-4f6c-a454-dbe7d21005ef}</Project>
       <Name>MyNote.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNote.Core\MyNote.Core.csproj">
+      <Project>{69ded1ed-b5b7-4da5-a73c-14f1b6dfb38c}</Project>
+      <Name>MyNote.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNote.Entities\MyNote.Entities.csproj">
       <Project>{9d8f7027-ae62-47b4-9082-b6c9733165f8}</Project>

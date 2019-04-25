@@ -1,6 +1,7 @@
-﻿using MyNote.Common;
+﻿using MyNote.BusinessLayer.Abstract;
+using MyNote.BusinessLayer.Results;
+using MyNote.Common;
 using MyNote.Common.Helpers;
-using MyNote.DataAccessLayer.EntityFramework;
 using MyNote.Entities;
 using MyNote.Entities.Messages;
 using MyNote.Entities.ValueObjects;
@@ -12,9 +13,8 @@ using System.Threading.Tasks;
 
 namespace MyNote.BusinessLayer
 {
-    public class MyNoteUserManager
+    public class MyNoteUserManager : ManagerBase<MyNoteUser>
     {
-        private Repository<MyNoteUser> repo_user = new Repository<MyNoteUser>();
 
         public BusinessLayerResult<MyNoteUser> RegisterUser(RegisterViewModel data)
         {
@@ -23,7 +23,7 @@ namespace MyNote.BusinessLayer
             //kayıt işlemi
             //aktivasyon e postası gönderimi
 
-            MyNoteUser user = repo_user.Find(x => x.Username == data.Username || x.Email == data.Email); //kullanıcı var mı?
+            MyNoteUser user =Find(x => x.Username == data.Username || x.Email == data.Email); //kullanıcı var mı?
             BusinessLayerResult<MyNoteUser> layerResult = new BusinessLayerResult<MyNoteUser>();
 
             if (user != null)
@@ -41,7 +41,7 @@ namespace MyNote.BusinessLayer
 
             else
             {
-                int dbResult = repo_user.Insert(new MyNoteUser()
+                int dbResult = Insert(new MyNoteUser()
                 {
                     Username = data.Username,
                     Email = data.Email,
@@ -58,7 +58,7 @@ namespace MyNote.BusinessLayer
 
                 if (dbResult > 0)
                 {
-                    layerResult.Result = repo_user.Find(x => x.Email == data.Email && x.Username == data.Username);
+                    layerResult.Result = Find(x => x.Email == data.Email && x.Username == data.Username);
 
                     //aktivasyon maili atılacak
                     //layerResult.Result.ActivateGuid
@@ -80,7 +80,7 @@ namespace MyNote.BusinessLayer
         public BusinessLayerResult<MyNoteUser> GetUserById(int id)
         {
             BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
-            res.Result = repo_user.Find(x => x.Id == id);
+            res.Result = Find(x => x.Id == id);
 
             if (res.Result == null)
             {
@@ -96,7 +96,7 @@ namespace MyNote.BusinessLayer
             //Sessiona kullanıcı bilgi saklama
 
             BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
-            res.Result = repo_user.Find(x => x.Username == data.Username && x.Password == data.Password); //kayıt eşleşti mi?
+            res.Result = Find(x => x.Username == data.Username && x.Password == data.Password); //kayıt eşleşti mi?
 
 
 
@@ -120,7 +120,7 @@ namespace MyNote.BusinessLayer
 
         public BusinessLayerResult<MyNoteUser> UpdateProfile(MyNoteUser data)
         {
-            MyNoteUser user = repo_user.Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email)); //kullanıcı kontrolü
+            MyNoteUser user = Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email)); //kullanıcı kontrolü
             BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
 
             if (user != null && user.Id != data.Id)
@@ -138,7 +138,7 @@ namespace MyNote.BusinessLayer
                 return res;
             }
 
-            res.Result = repo_user.Find(x => x.Id == data.Id);
+            res.Result = Find(x => x.Id == data.Id);
             res.Result.Email = data.Email;
             res.Result.Name = data.Name;
             res.Result.Surname = data.Surname;
@@ -150,7 +150,7 @@ namespace MyNote.BusinessLayer
                 res.Result.ProfileImageFilename = data.ProfileImageFilename;
             }
 
-            if (repo_user.Update(res.Result) == 0)
+            if (Update(res.Result) == 0)
             {
                 res.AddError(ErrorMessagesCode.ProfileCouldNotUpdated, "Profil güncellenemedi.");
             }
@@ -161,11 +161,11 @@ namespace MyNote.BusinessLayer
         public BusinessLayerResult<MyNoteUser> RemoveUserById(int id)
         {
             BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
-            MyNoteUser user = repo_user.Find(x => x.Id == id);
+            MyNoteUser user = Find(x => x.Id == id);
 
             if (user != null)
             {
-                if (repo_user.Delete(user) == 0)
+                if (Delete(user) == 0)
                 {
                     res.AddError(ErrorMessagesCode.UserCouldNotRemove, "Kullanıcı silinemedi.");
                     return res;
@@ -184,7 +184,7 @@ namespace MyNote.BusinessLayer
         public BusinessLayerResult<MyNoteUser> ActivateUser(Guid activateId)
         {
             BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
-            res.Result = repo_user.Find(x => x.ActivateGuid == activateId); //kullanıcı var mı?
+            res.Result = Find(x => x.ActivateGuid == activateId); //kullanıcı var mı?
 
             if (res.Result != null)
             {
@@ -195,7 +195,7 @@ namespace MyNote.BusinessLayer
                     return res;
                 }
                 res.Result.IsActive = true;
-                repo_user.Update(res.Result);
+                Update(res.Result);
             }
 
             else
@@ -209,4 +209,3 @@ namespace MyNote.BusinessLayer
         }
     }
 }
-/////

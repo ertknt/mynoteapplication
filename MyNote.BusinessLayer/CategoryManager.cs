@@ -1,4 +1,4 @@
-﻿using MyNote.DataAccessLayer.EntityFramework;
+﻿using MyNote.BusinessLayer.Abstract;
 using MyNote.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,18 +8,9 @@ using System.Threading.Tasks;
 
 namespace MyNote.BusinessLayer
 {
-    public class CategoryManager
+    public class CategoryManager : ManagerBase<Category>
     {
-        private Repository<Category> repo_category = new Repository<Category>();
 
-        public List<Category> GetCategories()
-        {
-            return repo_category.List();
-        }
-
-        public Category GetCategoryById(int id)
-        {
-            return repo_category.Find(x => x.Id == id);
-        }
+      
     }
 }

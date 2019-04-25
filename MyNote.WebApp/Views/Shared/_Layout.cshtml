@@ -50,10 +50,23 @@
                 <ul class="nav navbar-nav">
                     @if (user != null)
                     {
-                        <li>
-                            <a href="#">
+
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="/Note/MyNotes" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="glyphicon glyphicon-wrench"></span> Yönetim
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/Note/AddNew"><span class="glyphicon glyphicon-plus"></span> Not Ekle</a></li>
+                                <li><a class="dropdown-item" href="/Note/MyNotes"><span class="glyphicon glyphicon-th-list"></span> Notlarım</a></li>
+                                <li><a class="dropdown-item" href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-heart"></span> Beğendiklerim</a></li>
+
+                                @if (user.IsAdmin)
+                                {
+                                    <li role="separator" class="divider"></li>
+                                    <li><a class="dropdown-item" href="/Category/AddNew"><span class="glyphicon glyphicon-plus"></span> Kategori Ekle</a></li>
+                                    <li><a class="dropdown-item" href="/Category/List"><span class="glyphicon glyphicon-th-list"></span> Kategoriler</a></li>
+                                }
+                            </ul>
                         </li>
                     }
                     <li>
@@ -89,10 +102,26 @@
                     }
                     @if (user != null)
                     {
-                        <li>
-                            <a href="/Home/ShowProfile">
-                                <span class="glyphicon glyphicon-user"></span> @user.Username
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle" href="/Home/ShowProfile" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-user"></span> @user.Name
                             </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>
+                                <a class="dropdown-item" href="/Home/ShowProfile"><span class="glyphicon glyphicon-user"></span> Profili Göster</a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                <a class="dropdown-item" href="/Home/EditProfile">
+                                    <span class="glyphicon glyphicon glyphicon-edit"></span> Profili Düzenle
+                                    </a>
+                                </li>
+                                <li>
+                                <a class="dropdown-item" href="/Home/DeleteProfile" onclick="return confirm('Hesabınızı silmek istediğinize emin misiniz?');">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span> Profili Sil
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="/Home/Logout">

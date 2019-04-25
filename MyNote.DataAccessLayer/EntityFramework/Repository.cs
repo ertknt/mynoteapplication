@@ -1,4 +1,5 @@
-﻿using MyNote.DataAccessLayer;
+﻿using MyNote.Core.DataAccess;
+using MyNote.DataAccessLayer;
 using MyNote.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace MyNote.DataAccessLayer.EntityFramework
 {
-    public class Repository<T> where T : class // T nin class olması gerektiği için class yaptık.
+    public class Repository<T> : IDataAccess<T> where T : class // T nin class olması gerektiği için class yaptık.
     {
         private DatabaseContext db;
         private DbSet<T> _objectSet;
@@ -67,5 +68,14 @@ namespace MyNote.DataAccessLayer.EntityFramework
             return db.SaveChanges();
         }
 
+        public IQueryable<T> ListQueryable()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Save(T obj)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

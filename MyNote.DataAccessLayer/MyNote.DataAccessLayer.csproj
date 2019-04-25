@@ -69,6 +69,10 @@
       <Project>{f244fa12-cba8-4f6c-a454-dbe7d21005ef}</Project>
       <Name>MyNote.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyNote.Core\MyNote.Core.csproj">
+      <Project>{69ded1ed-b5b7-4da5-a73c-14f1b6dfb38c}</Project>
+      <Name>MyNote.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MyNote.Entities\MyNote.Entities.csproj">
       <Project>{9d8f7027-ae62-47b4-9082-b6c9733165f8}</Project>
       <Name>MyNote.Entities</Name>

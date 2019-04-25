@@ -48,8 +48,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BusinessLayerResult.cs" />
+    <Compile Include="Results\BusinessLayerResult.cs" />
     <Compile Include="CategoryManager.cs" />
+    <Compile Include="Abstract\ManagerBase.cs" />
     <Compile Include="MyNoteUserManager.cs" />
     <Compile Include="NoteManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -59,6 +60,10 @@
     <ProjectReference Include="..\MyNote.Common\MyNote.Common.csproj">
       <Project>{f244fa12-cba8-4f6c-a454-dbe7d21005ef}</Project>
       <Name>MyNote.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MyNote.Core\MyNote.Core.csproj">
+      <Project>{69ded1ed-b5b7-4da5-a73c-14f1b6dfb38c}</Project>
+      <Name>MyNote.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\MyNote.DataAccessLayer\MyNote.DataAccessLayer.csproj">
       <Project>{89eb607d-3d8a-430c-9295-733e0f26d92d}</Project>
@@ -73,5 +78,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

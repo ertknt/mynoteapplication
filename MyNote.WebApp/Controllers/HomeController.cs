@@ -1,4 +1,5 @@
 ﻿using MyNote.BusinessLayer;
+using MyNote.BusinessLayer.Results;
 using MyNote.Entities;
 using MyNote.Entities.Messages;
 using MyNote.Entities.ValueObjects;
@@ -14,6 +15,11 @@ namespace MyNote.WebApp.Controllers
 {
     public class HomeController : Controller
     {
+        private NoteManager noteManager = new NoteManager();
+        private CategoryManager CategoryManager = new CategoryManager();
+        private MyNoteUserManager myNoteUserManager = new MyNoteUserManager();
+
+
 
         public ActionResult Index()
         {
@@ -22,12 +28,11 @@ namespace MyNote.WebApp.Controllers
                 return View(TempData["mm"] as List<Note>);
             }
 
-            NoteManager nm = new NoteManager();
 
 
 
 
-            return View(nm.GetAllNote().OrderByDescending(x => x.ModifiedOn).ToList());
+            return View(noteManager.ListQueryable().OrderByDescending(x => x.ModifiedOn).ToList());
         }
 
         public ActionResult ByCategory(int? id)
@@ -37,8 +42,7 @@ namespace MyNote.WebApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            CategoryManager cm = new CategoryManager();
-            Category cat = cm.GetCategoryById(id.Value);
+            Category cat = CategoryManager.Find(x => x.Id == id.Value);
 
             if (cat == null)
             {
@@ -52,9 +56,7 @@ namespace MyNote.WebApp.Controllers
 
         public ActionResult MostLiked()
         {
-            NoteManager nm = new NoteManager();
-
-            return View("Index", nm.GetAllNote().OrderByDescending(x => x.LikeCount).ToList());
+            return View("Index", noteManager.ListQueryable().OrderByDescending(x => x.LikeCount).ToList());
         }
 
         public ActionResult About()
@@ -66,8 +68,7 @@ namespace MyNote.WebApp.Controllers
         {
             MyNoteUser currentUser = Session["login"] as MyNoteUser;
 
-            MyNoteUserManager mum = new MyNoteUserManager();
-            BusinessLayerResult<MyNoteUser> res = mum.GetUserById(currentUser.Id);
+            BusinessLayerResult<MyNoteUser> res = myNoteUserManager.GetUserById(currentUser.Id);
 
             if (res.Errors.Count > 0)
             {
@@ -88,8 +89,7 @@ namespace MyNote.WebApp.Controllers
         {
             MyNoteUser currentUser = Session["login"] as MyNoteUser;
 
-            MyNoteUserManager mum = new MyNoteUserManager();
-            BusinessLayerResult<MyNoteUser> res = mum.GetUserById(currentUser.Id);
+            BusinessLayerResult<MyNoteUser> res = myNoteUserManager.GetUserById(currentUser.Id);
 
             if (res.Errors.Count > 0)
             {
@@ -123,8 +123,7 @@ namespace MyNote.WebApp.Controllers
                     model.ProfileImageFilename = filename;
                 }
 
-                MyNoteUserManager mum = new MyNoteUserManager();
-                BusinessLayerResult<MyNoteUser> res = mum.UpdateProfile(model);
+                BusinessLayerResult<MyNoteUser> res = myNoteUserManager.UpdateProfile(model);
 
                 if (res.Errors.Count > 0)
                 {
@@ -150,8 +149,7 @@ namespace MyNote.WebApp.Controllers
         {
             MyNoteUser currentUser = Session["login"] as MyNoteUser;
 
-            MyNoteUserManager mum = new MyNoteUserManager();
-            BusinessLayerResult<MyNoteUser> res = mum.RemoveUserById(currentUser.Id);
+            BusinessLayerResult<MyNoteUser> res = myNoteUserManager.RemoveUserById(currentUser.Id);
 
             if (res.Errors.Count > 0)
             {
@@ -193,9 +191,8 @@ namespace MyNote.WebApp.Controllers
         {
             if (ModelState.IsValid) //model valid ise
             {
-                MyNoteUserManager num = new MyNoteUserManager();
 
-                var res = num.LoginUser(model); //login olmayı dene
+                var res = myNoteUserManager.LoginUser(model); //login olmayı dene
 
                 if (res.Errors.Count > 0) //hata varsa
                 {
@@ -237,9 +234,8 @@ namespace MyNote.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                MyNoteUserManager mum = new MyNoteUserManager();
 
-                var res = mum.RegisterUser(model);
+                var res = myNoteUserManager.RegisterUser(model);
 
                 if (res.Errors.Count > 0)
                 {
@@ -270,8 +266,7 @@ namespace MyNote.WebApp.Controllers
         {
             //kullanıcı aktivasyonu sağlanacak
 
-            MyNoteUserManager mum = new MyNoteUserManager();
-            BusinessLayerResult<MyNoteUser> res = mum.ActivateUser(id);
+            BusinessLayerResult<MyNoteUser> res = myNoteUserManager.ActivateUser(id);
 
             if (res.Errors.Count > 0)
             {
