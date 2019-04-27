@@ -19,7 +19,7 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>Category</h4>
+          
                 <hr />
                 @Html.ValidationSummary(false)
                 <div class="form-group">
@@ -42,9 +42,9 @@
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
                         <button type="submit" class="btn btn-success"> 
-                        <span class="glyphicon glyphicon-plus"></span> Create
+                        <span class="glyphicon glyphicon-plus"></span> Oluştur
                         </button>
-                        @Html.ActionLink("Back to List", "Index", "Category", null, new { @class = "btn btn-dafault" })
+                        @Html.ActionLink("Geri Dön", "Index", "Category", null, new { @class = "btn btn-default" })
                         <div>
 
                         </div>

@@ -12,10 +12,14 @@ namespace MyNote.Entities
     public class Category : MyEntityBase
     {
        
-        [Required, StringLength(50)]
+        [Display(Name ="Başlık"), 
+            Required(ErrorMessage = "{0} alanı gereklidir."), 
+            StringLength(50)]
         public string Title { get; set; }
 
-        [StringLength(150)]
+        [Display(Name = "Açıklama"), 
+            Required(ErrorMessage = "{0} alanı gereklidir."),  
+            StringLength(150)]
         public string Description { get; set; }
 
         public virtual List<Note> Notes { get; set; }

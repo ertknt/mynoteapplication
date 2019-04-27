@@ -47,6 +47,10 @@ namespace MyNote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUsername");
+
             if (ModelState.IsValid)
             {
                 CategoryManager.Insert(category);
@@ -77,9 +81,16 @@ namespace MyNote.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category)
         {
+            ModelState.Remove("CreatedOn");
+            ModelState.Remove("ModifiedOn");
+            ModelState.Remove("ModifiedUsername");
+
             if (ModelState.IsValid)
             {
-                // todo
+                Category cat = CategoryManager.Find(x => x.Id == category.Id);
+                cat.Title = category.Title;
+                cat.Description = category.Description;
+
                 CategoryManager.Update(category);
 
                 return RedirectToAction("Index");
@@ -94,6 +105,7 @@ namespace MyNote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Category category = CategoryManager.Find(x => x.Id == id.Value);
 
             if (category == null)

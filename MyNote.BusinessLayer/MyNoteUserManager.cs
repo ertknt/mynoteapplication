@@ -65,8 +65,8 @@ namespace MyNote.BusinessLayer
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
                     string body = $"Merhaba {layerResult.Result.Username};<br><br> Hesabınızı akifleştirmek için <a href='activateUri' target='_blank'></a> tıklayınız.";
                     string activateUri = $"{siteUri}/Home/UserActivate/{layerResult.Result.ActivateGuid}";
-                    string about = "MyNote Hesap Aktifleştirme";
-
+                    //string about = "MyNote Hesap Aktifleştirme";
+                    //mail göndermede hata var
                     //MailHelper.SendMail(body, layerResult.Result.Email, about);
                 }
             }

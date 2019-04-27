@@ -20,5 +20,22 @@ namespace MyNote.DataAccessLayer.EntityFramework
         {
             Database.SetInitializer(new MyInitializer());
         }
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    // FluentAPI
+
+        //    modelBuilder.Entity<Note>()
+        //        .HasMany(n => n.Comments) //çok ilişkili
+        //        .WithRequired(c => c.Note) //not null
+        //        .WillCascadeOnDelete(true); //ilişki entity yi de silsin
+
+
+        //    modelBuilder.Entity<Note>()
+        //        .HasMany(n => n.Likes) //çok ilişkili
+        //        .WithRequired(c => c.Note) //not null
+        //        .WillCascadeOnDelete(true); //ilişki entity yi de silsin
+
+        //}
     }
 }

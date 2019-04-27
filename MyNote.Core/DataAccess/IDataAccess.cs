@@ -15,7 +15,7 @@ namespace MyNote.Core.DataAccess
         int Insert(T obj);
         int Update(T obj);
         int Delete(T obj);
-        int Save(T obj);
+        int Save();
         T Find(Expression<Func<T, bool>> where);
     }
 }

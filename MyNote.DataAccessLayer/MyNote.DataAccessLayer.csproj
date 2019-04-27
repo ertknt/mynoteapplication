@@ -55,6 +55,15 @@
     <Compile Include="EntityFramework\Repository.cs" />
     <Compile Include="EntityFramework\RepositoryBase.cs" />
     <Compile Include="EntityFramework\MyInitializer.cs" />
+    <Compile Include="Migrations\201904232022353_InitialCreate.cs" />
+    <Compile Include="Migrations\201904232022353_InitialCreate.Designer.cs">
+      <DependentUpon>201904232022353_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904271850338_Initial.cs" />
+    <Compile Include="Migrations\201904271850338_Initial.Designer.cs">
+      <DependentUpon>201904271850338_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -77,6 +86,14 @@
       <Project>{9d8f7027-ae62-47b4-9082-b6c9733165f8}</Project>
       <Name>MyNote.Entities</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904232022353_InitialCreate.resx">
+      <DependentUpon>201904232022353_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904271850338_Initial.resx">
+      <DependentUpon>201904271850338_Initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

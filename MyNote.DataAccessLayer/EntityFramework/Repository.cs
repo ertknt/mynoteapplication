@@ -1,4 +1,5 @@
-﻿using MyNote.Core.DataAccess;
+﻿using MyNote.Common;
+using MyNote.Core.DataAccess;
 using MyNote.DataAccessLayer;
 using MyNote.Entities;
 using System;
@@ -27,7 +28,7 @@ namespace MyNote.DataAccessLayer.EntityFramework
             return _objectSet.ToList(); //T ->Gelen tipin setini bul ona dönüştür.
         }
 
-        public IQueryable<T> listQueryable()
+        public IQueryable<T> ListQueryable()
         {
             return _objectSet.AsQueryable<T>();
         }
@@ -47,6 +48,16 @@ namespace MyNote.DataAccessLayer.EntityFramework
         public int Insert(T obj)
         {
             _objectSet.Add(obj);
+
+            if (obj is MyEntityBase)
+            {
+                MyEntityBase o = obj as MyEntityBase;
+                DateTime now = DateTime.Now;
+
+                o.CreatedOn = now;
+                o.ModifiedOn = now;
+                o.ModifiedUsername = App.Common.GetCurrentUsername();
+            }
 
             return Save();
         }
@@ -68,14 +79,9 @@ namespace MyNote.DataAccessLayer.EntityFramework
             return db.SaveChanges();
         }
 
-        public IQueryable<T> ListQueryable()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Save(T obj)
         {
-            throw new NotImplementedException();
+            return db.SaveChanges();
         }
     }
 }

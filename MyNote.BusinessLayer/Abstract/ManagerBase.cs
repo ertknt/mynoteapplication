@@ -13,7 +13,7 @@ namespace MyNote.BusinessLayer.Abstract
     {
         private Repository<T> repo = new Repository<T>();
 
-        public int Delete(T obj)
+        public virtual int Delete(T obj)
         {
             return repo.Delete(obj);
         }
@@ -40,10 +40,10 @@ namespace MyNote.BusinessLayer.Abstract
 
         public IQueryable<T> ListQueryable()
         {
-            return repo.listQueryable();
+            return repo.ListQueryable();
         }
 
-        public int Save(T obj)
+        public int Save()
         {
             return repo.Save();
         }
