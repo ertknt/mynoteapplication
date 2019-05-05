@@ -12,7 +12,7 @@ namespace MyNote.Entities
     public class Category : MyEntityBase
     {
        
-        [Display(Name ="Başlık"), 
+        [Display(Name ="Kategori"), 
             Required(ErrorMessage = "{0} alanı gereklidir."), 
             StringLength(50)]
         public string Title { get; set; }

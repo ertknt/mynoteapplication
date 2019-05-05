@@ -9,16 +9,19 @@ namespace MyNote.Entities
 {
     public class Note : MyEntityBase
     {
-        [Required, StringLength(60)]
+        [Display(Name ="Not Başlığı"), Required, StringLength(60)]
         public string Title { get; set; }
 
-        [Required, StringLength(2000)]
+        [Display(Name = "Not Metni"), Required, StringLength(2000)]
         public string Text { get; set; }
 
+        [Display(Name = "Taslak")]
         public bool IsDraft { get; set; } //taslak mı?
 
+        [Display(Name = "Beğenilme")]
         public int LikeCount { get; set; }
 
+        [Display(Name = "Kategori")]
         public int CategoryId { get; set; }
 
 
