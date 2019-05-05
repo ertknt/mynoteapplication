@@ -41,7 +41,7 @@ namespace MyNote.BusinessLayer
 
             else
             {
-                int dbResult = Insert(new MyNoteUser()
+                int dbResult = base.Insert(new MyNoteUser()
                 {
                     Username = data.Username,
                     Email = data.Email,
@@ -65,7 +65,7 @@ namespace MyNote.BusinessLayer
                     string siteUri = ConfigHelper.Get<string>("SiteRootUri");
                     string body = $"Merhaba {layerResult.Result.Username};<br><br> Hesabınızı akifleştirmek için <a href='activateUri' target='_blank'></a> tıklayınız.";
                     string activateUri = $"{siteUri}/Home/UserActivate/{layerResult.Result.ActivateGuid}";
-                    //string about = "MyNote Hesap Aktifleştirme";
+                    string about = "MyNote Hesap Aktifleştirme";
                     //mail göndermede hata var
                     //MailHelper.SendMail(body, layerResult.Result.Email, about);
                 }
@@ -74,7 +74,7 @@ namespace MyNote.BusinessLayer
             return layerResult;
 
 
-
+             
         }
 
         public BusinessLayerResult<MyNoteUser> GetUserById(int id)
@@ -150,7 +150,7 @@ namespace MyNote.BusinessLayer
                 res.Result.ProfileImageFilename = data.ProfileImageFilename;
             }
 
-            if (Update(res.Result) == 0)
+            if (base.Update(res.Result) == 0)
             {
                 res.AddError(ErrorMessagesCode.ProfileCouldNotUpdated, "Profil güncellenemedi.");
             }
@@ -206,6 +206,90 @@ namespace MyNote.BusinessLayer
             return res;
 
 
+        }
+
+        //managerbase classından miras ile gelen insert metodunu override edebilmek için new anahtar kelimesiyle metot gizleme kullandım. Bu metoda dönüş tipi 'Businesslayerresult' nesnesine ihtiyacım olduğu için kullandım. Çünkü hata mesajı basmak istiyorum. Bu metotu kullanmayıp base classdan gelen Insert metodunu kullansaydım dönüş tipi olarak int dönüyordu. 
+        public new BusinessLayerResult<MyNoteUser> Insert(MyNoteUser data) 
+        {
+            //kullanıcı username kontrolü
+            //kullanıcı e posta kontrolü
+            //kayıt işlemi
+            //aktivasyon e postası gönderimi
+
+            MyNoteUser user = Find(x => x.Username == data.Username || x.Email == data.Email); //kullanıcı var mı?
+            BusinessLayerResult<MyNoteUser> layerResult = new BusinessLayerResult<MyNoteUser>();
+
+            layerResult.Result = data;
+
+            if (user != null)
+            {
+                if (user.Username == data.Username) //username aynı mı?
+                {
+                    layerResult.AddError(ErrorMessagesCode.UsernameAlreadyExist, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (user.Email == data.Email) //email aynı mı?
+                {
+                    layerResult.AddError(ErrorMessagesCode.EmailAldreadyExist, "E-mail adresi kayıtlı.");
+                }
+            }
+
+            else
+            {
+                layerResult.Result.ProfileImageFilename = "index.jpg";
+                layerResult.Result.ActivateGuid = Guid.NewGuid();
+
+                if(base.Insert(layerResult.Result) == 0)
+                {
+                    layerResult.AddError(ErrorMessagesCode.UserCouldNotInserted, "Kullanıcı eklenemedi.");
+
+                }
+
+
+
+            }
+
+            return layerResult;
+        }
+
+        public new BusinessLayerResult<MyNoteUser> Update(MyNoteUser data)
+        {
+            MyNoteUser user = Find(x => x.Id != data.Id && (x.Username == data.Username || x.Email == data.Email)); //kullanıcı kontrolü
+            BusinessLayerResult<MyNoteUser> res = new BusinessLayerResult<MyNoteUser>();
+            res.Result = data;
+
+            if (user != null && user.Id != data.Id)
+            {
+                if (user.Username == data.Username)
+                {
+                    res.AddError(ErrorMessagesCode.UsernameAlreadyExist, "Kullanıcı adı kayıtlı.");
+                }
+
+                if (user.Email == data.Email)
+                {
+                    res.AddError(ErrorMessagesCode.EmailAldreadyExist, "E-mail adresi kayıtlı.");
+                }
+
+                return res;
+            }
+
+            res.Result = Find(x => x.Id == data.Id);
+            res.Result.Email = data.Email;
+            res.Result.Name = data.Name;
+            res.Result.Surname = data.Surname;
+            res.Result.Password = data.Password;
+            res.Result.Username = data.Username;
+            res.Result.IsActive = data.IsActive;
+            res.Result.IsAdmin = data.IsAdmin;
+
+            
+
+            if (base.Update(res.Result) == 0)
+            {
+                res.AddError(ErrorMessagesCode.UserCouldNotUpdated, "Kullanıcı güncellenemedi.");
+            }
+
+            return res;
         }
     }
 }

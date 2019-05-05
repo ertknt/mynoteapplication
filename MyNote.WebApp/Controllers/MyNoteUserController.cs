@@ -7,19 +7,21 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyNote.BusinessLayer;
-using MyNote.Entities; 
+using MyNote.BusinessLayer.Results;
+using MyNote.Entities;
 
 namespace MyNote.WebApp.Controllers
 {
-    public class CategoryController : Controller
+    public class MyNoteUserController : Controller
     {
-        private CategoryManager CategoryManager = new CategoryManager();
+        private MyNoteUserManager MyNoteUserManager = new MyNoteUserManager();
 
-        // GET: Category
+
         public ActionResult Index()
         {
-            return View(CategoryManager.List());
+            return View(MyNoteUserManager.List());
         }
+
 
         public ActionResult Details(int? id)
         {
@@ -27,24 +29,24 @@ namespace MyNote.WebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = CategoryManager.Find(x => x.Id == id.Value);
+            MyNoteUser myNoteUser = MyNoteUserManager.Find(x => x.Id == id.Value);
 
-            if (category == null)
+            if (myNoteUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+            return View(myNoteUser);
         }
+
 
         public ActionResult Create()
         {
             return View();
         }
 
-
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Category category)
+        public ActionResult Create(MyNoteUser myNoteUser)
         {
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
@@ -52,33 +54,42 @@ namespace MyNote.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                CategoryManager.Insert(category);
+                BusinessLayerResult<MyNoteUser> res = MyNoteUserManager.Insert(myNoteUser);
+
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+
+                    return View(myNoteUser);
+                }
+
 
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(myNoteUser);
         }
 
-
+        // GET: MyNoteUser/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Category category = CategoryManager.Find(x => x.Id == id.Value);
+            MyNoteUser myNoteUser = MyNoteUserManager.Find(x => x.Id == id.Value);
 
-            if (category == null)
+            if (myNoteUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+
+            return View(myNoteUser);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Category category)
+        public ActionResult Edit(MyNoteUser myNoteUser)
         {
             ModelState.Remove("CreatedOn");
             ModelState.Remove("ModifiedOn");
@@ -86,45 +97,48 @@ namespace MyNote.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                Category cat = CategoryManager.Find(x => x.Id == category.Id);
-                cat.Title = category.Title;
-                cat.Description = category.Description;
+                BusinessLayerResult<MyNoteUser> res = MyNoteUserManager.Update(myNoteUser);
 
-                CategoryManager.Update(category);
+                if (res.Errors.Count > 0)
+                {
+                    res.Errors.ForEach(x => ModelState.AddModelError("", x.Message));
+
+                    return View(myNoteUser);
+                }
 
                 return RedirectToAction("Index");
             }
-            return View(category);
+
+            return View(myNoteUser);
         }
 
-
+        // GET: MyNoteUser/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            MyNoteUser myNoteUser = MyNoteUserManager.Find(x => x.Id == id.Value);
 
-            Category category = CategoryManager.Find(x => x.Id == id.Value);
-
-            if (category == null)
+            if (myNoteUser == null)
             {
                 return HttpNotFound();
             }
-            return View(category);
+
+            return View(myNoteUser);
         }
 
-
+        // POST: MyNoteUser/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Category category = CategoryManager.Find(x => x.Id == id);
-            CategoryManager.Delete(category);
+            MyNoteUser myNoteUser = MyNoteUserManager.Find(x => x.Id == id);
+
+            MyNoteUserManager.Delete(myNoteUser);
 
             return RedirectToAction("Index");
         }
-
- 
     }
 }

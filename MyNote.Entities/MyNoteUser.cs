@@ -31,14 +31,16 @@ namespace MyNote.Entities
         [Required(ErrorMessage = "{0} alanı gereklidir."), StringLength(25)]
         public string Password { get; set; }
 
-        [StringLength(30, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
+        [StringLength(30, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır."), ScaffoldColumn(false)]
         public string ProfileImageFilename { get; set; }
 
+        [Display(Name = "Aktif mi?")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "Admin mi?")]
         public bool IsAdmin { get; set; }
 
-        [Required]
+        [Required, ScaffoldColumn(false)]
         public Guid ActivateGuid { get; set; }
 
         

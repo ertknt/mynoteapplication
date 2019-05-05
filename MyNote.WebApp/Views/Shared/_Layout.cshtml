@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">My Note</a>
+                <a class="navbar-brand" href="/Home/Index">My Note</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -58,13 +58,28 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="/Note/AddNew"><span class="glyphicon glyphicon-plus"></span> Not Ekle</a></li>
                                 <li><a class="dropdown-item" href="/Note/MyNotes"><span class="glyphicon glyphicon-th-list"></span> Notlarım</a></li>
-                                <li><a class="dropdown-item" href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-heart"></span> Beğendiklerim</a></li>
+                                <li><a class="dropdown-item" href="/Note/MyLikedNotes"><span class="glyphicon glyphicon-heart">
+                                      </span> Beğendiklerim</a></li>
 
                                 @if (user.IsAdmin)
                                 {
                                     <li role="separator" class="divider"></li>
-                                    <li><a class="dropdown-item" href="/Category/Create"><span class="glyphicon glyphicon-plus"></span> Kategori Ekle</a></li>
-                                    <li><a class="dropdown-item" href="/Category/Index"><span class="glyphicon glyphicon-th-list"></span> Kategoriler</a></li>
+                                    <li><a class="dropdown-item" href="/Category/Create">
+                                        <span class="glyphicon glyphicon-plus">
+                                          </span> Kategori Ekle</a></li>
+
+                                    <li><a class="dropdown-item" href="/Category/Index">
+                                        <span class="glyphicon glyphicon-th-list">
+                                          </span> Kategoriler</a></li>
+
+                                    <li role="separator" class="divider"></li>
+                                    <li><a class="dropdown-item" href="/MynoteUser/Create">
+                                        <span class="glyphicon glyphicon-plus">
+                                          </span> Kullanıcı Ekle</a></li>
+
+                                    <li><a class="dropdown-item" href="/MynoteUser/Index">
+                                        <span class="glyphicon glyphicon-th-list">
+                                          </span> Kullanıcılar</a></li>
                                 }
                             </ul>
                         </li>

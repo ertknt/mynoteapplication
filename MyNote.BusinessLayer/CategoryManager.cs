@@ -16,25 +16,25 @@ namespace MyNote.BusinessLayer
             LikedManager likedManager = new LikedManager();
             CommentManager commentManager = new CommentManager();
 
-            //Kategori ile ilişkili notların, beğenilerin, yorumların silinmesi gerekiyor.
-            foreach ( Note note in category.Notes.ToList())
-            {
 
-                // not ile ilişkili beğenilerin silinmesi.
+            //kategori ile ilişkili notların silinmesi gerekiyor.
+            foreach (Note note in category.Notes.ToList()) //kategorinin notları.
+            {
+                //Note ile ilişkili like ların silinmesi gerekiyor.
                 foreach (Liked liked in note.Likes.ToList())
                 {
-                    likedManager.Delete(liked);
+                    likedManager.Delete(liked); //nota ait like ların silinmesi.
                 }
 
-                // not ile ilişkili yorumların silinmesi
+                //Note ile ilişkili comment lerin silinmesi gerekiyor.
                 foreach (Comment comment in note.Comments.ToList())
                 {
-                    commentManager.Delete(comment);
+                    commentManager.Delete(comment); // nota ait commentlerin silinmesi.
                 }
 
-                noteManager.Delete(note);
-            }
 
+                noteManager.Delete(note); //kategoriye ait notların silinmesi.
+            }
 
             return base.Delete(category);
         }
