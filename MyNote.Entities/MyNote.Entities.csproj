@@ -45,7 +45,7 @@
     <Compile Include="Category.cs" />
     <Compile Include="Comment.cs" />
     <Compile Include="Liked.cs" />
-    <Compile Include="Messages\ErrorMessageObg.cs" />
+    <Compile Include="Messages\ErrorMessageObj.cs" />
     <Compile Include="Messages\ErrorMessagesCode.cs" />
     <Compile Include="MyEntityBase.cs" />
     <Compile Include="MyNoteUser.cs" />
