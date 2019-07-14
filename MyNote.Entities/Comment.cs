@@ -11,7 +11,8 @@ namespace MyNote.Entities
     [Table("Comments")]
     public class Comment : MyEntityBase
     {
-        [Required, StringLength(300)]
+        [Required(ErrorMessage = "{0} alanı gereklidir."), 
+            StringLength(300, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string Text { get; set; }
 
         public virtual Note Note { get; set; }

@@ -13,13 +13,14 @@ namespace MyNote.Entities
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} alanı gereklidir.")]
         public DateTime CreatedOn { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} alanı gereklidir.")]
         public DateTime ModifiedOn { get; set; }
 
-        [Required, StringLength(30)]
+        [Required(ErrorMessage = "{0} alanı gereklidir."), 
+            StringLength(30, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string ModifiedUsername { get; set; }
     }
 }

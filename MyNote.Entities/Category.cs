@@ -14,12 +14,12 @@ namespace MyNote.Entities
        
         [Display(Name ="Kategori"), 
             Required(ErrorMessage = "{0} alanı gereklidir."), 
-            StringLength(50)]
+            StringLength(50, ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string Title { get; set; }
 
         [Display(Name = "Açıklama"), 
             Required(ErrorMessage = "{0} alanı gereklidir."),  
-            StringLength(150)]
+            StringLength(150,ErrorMessage = "{0} alanı max. {1} karakter olmalıdır.")]
         public string Description { get; set; }
 
         public virtual List<Note> Notes { get; set; }
